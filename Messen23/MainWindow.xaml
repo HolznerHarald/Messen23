@@ -1,0 +1,63 @@
+﻿<Window x:Class="Messen23.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Messen23"
+        Closing="Window_Closing"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="900">
+
+    <DockPanel Name="Doc">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" />
+                <MenuItem Header="_Open" Click="MenuItemOpen_Click"/>
+                <MenuItem Header="_Save" />
+                <Separator />
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem Header="_Bearbeiten">
+                <MenuItem Header="_Find Lines" Click="Bearbeiten_Click"/>
+                <MenuItem Header="_Zuschneiden und Speichern unter selben Namen" Click="Zuschneiden_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Option">
+                <MenuItem Header="_Image Ansicht" Click="ImageAnsicht_Click"/>
+                <MenuItem Header="_Test Ansicht" Click="TestAnsicht_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Test">
+                <MenuItem Header="_BitmapImage Width High" Click="MenuItemT1_Click"/>
+                <MenuItem Header="_Scroll" Click="MenuItemT2_Click"/>
+                <MenuItem Header="_Registry delete" Click="MenuItemT3_Click" />
+                <MenuItem Header="_Bild verlkleinern ThumbImage" Click="MenuItemT4_Click"/>
+                <MenuItem Header="_Bildteil auschneiden,anzeigen" Click="MenuItemT5_Click"/>
+                <MenuItem Header="_Graphic line draw" Click="MenuItemT6_Click" />
+                <MenuItem Header="_Speichert eine Bitmap auf 100x100" Click="MenuItemT7_Click"/>
+                <MenuItem Header="_mit Layouttransformund DoubleAnimation ganzes Window Zoomen " Click="MenuItemT8_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Test2">
+                <MenuItem Header="_BitmapImage aus jpg-Datei->Datei löschen " Click="MenuItemT21_Click"/>
+                <MenuItem Header="_Convert BitMap->BitmapImage" Click="MenuItemT22_Click"/>
+                <MenuItem Header="_T3" Click="MenuItemT23_Click" />
+                <MenuItem Header="_T4" Click="MenuItemT24_Click"/>
+                <MenuItem Header="_T5" Click="MenuItemT25_Click"/>
+                <MenuItem Header="_Bitmap Drehen" Click="MenuItemT26_Click" />
+            </MenuItem>
+        </Menu>
+        <Grid Name="GG"  Background="Transparent" PreviewMouseDown="GG_PreviewMouseDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+            <Image  Name = "imgName" Visibility="Hidden" Margin = "0"/>
+            <ScrollViewer  Grid.Column = "0"  x:Name = "Scroll1">
+                <Image  x:Name = "imgName1" MouseDown="imgName1_MouseDown" MouseMove="imgName1_MouseMove"  Margin = "0" />
+            </ScrollViewer>
+            <ScrollViewer Grid.Column="1" 
+                  HorizontalScrollBarVisibility="Auto" 
+                  VerticalScrollBarVisibility="Auto">
+                <ListBox  x:Name="Testliste" />
+            </ScrollViewer>
+        </Grid>
+    </DockPanel>
+</Window>
