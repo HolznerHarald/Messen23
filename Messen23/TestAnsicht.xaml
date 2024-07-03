@@ -17,20 +17,6 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <RadioButton Name="single" Content="Single Selection" Grid.Row="0" Grid.Column="0" Checked="single_Checked" Margin="10"/>
-        <RadioButton Name="multi" Content="Multiple Selection" Grid.Row="0" Grid.Column="1" Checked="multi_Checked" Margin="10"/>
-        <StackPanel Name="multicheck" Visibility="Hidden" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10">
-            <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1">
-                <StackPanel Margin="10">
-                    <GroupBox Header="Darstellung der Linien" Margin="10">
-                        <StackPanel Margin="10">
-                            <CheckBox Name="CH12" Content="Linien"/>
-                            <CheckBox Name="CH13" Content="Kreuze"/>
-                        </StackPanel>
-                    </GroupBox>
-                </StackPanel>
-            </Border>
-        </StackPanel>
         <StackPanel Name="singlecheck" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10">
             <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1">
                 <StackPanel Margin="10">
@@ -39,6 +25,7 @@
                             <RadioButton Name="RB11" Content="keine"/>
                             <RadioButton Name="RB12" Content="Linien"/>
                             <RadioButton Name="RB13" Content="Kreuze"/>
+                            <RadioButton Name="RB14" Content="beide"/>
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>

@@ -7,4 +7,8 @@
 	<UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="ObjMark.cs" />
+  </ItemGroup>
+
 </Project>

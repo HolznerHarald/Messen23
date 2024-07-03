@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Messen23"
         mc:Ignorable="d"
-        Title="ImageOption" Height="220" Width="220">
+        Title="ImageOption" Height="280" Width="250">
     <StackPanel Margin="10">
         <Label FontWeight="Bold" Margin="5">Image-Optionen</Label>
         <RadioButton Name="RB1" Margin="5">no scroll</RadioButton>

@@ -5,6 +5,8 @@ using System.IO;
 using System.Text;
 using System.Windows.Shapes;
 using Microsoft.Win32;
+using System.Windows;
+using Point = System.Drawing.Point;
 
 namespace Messen23
 {
@@ -12,15 +14,13 @@ namespace Messen23
     {
         private TestAnsicht TestAn;
 
-        internal int glAnsichtSingle = 0;
         internal int glTestAnsicht1, glTestAnsicht2;
-        internal int glTTKreuz, glTTLinien;
         internal const string subkey = "Messen23";
         internal const string keyName = userRoot + "\\" + subkey;
 
         private MainWindow MW;
         private const string userRoot = "HKEY_CURRENT_USER";
-        private int PunktKreuzGroesse = 15;
+        private int PunktKreuzGroesse = 4;
 
         //XXXXXX Konstruktor
         internal TestenReg(MainWindow mW)
@@ -29,17 +29,13 @@ namespace Messen23
             Registry.SetValue(keyName, "", 9998);
             glTestAnsicht1 = (int)Registry.GetValue(keyName, "TestAnsicht1", 1);
             glTestAnsicht2 = (int)Registry.GetValue(keyName, "TestAnsicht2", 1);
-            glTTKreuz = (int)Registry.GetValue(keyName, "TestAnsichtChKreuz", 1);
-            glTTLinien = (int)Registry.GetValue(keyName, "TestAnsichtChLine", 0);
-            glAnsichtSingle = (int)Registry.GetValue(keyName, "TestAnsichtsingle", 0);
-
 
             String s2 = (String)Registry.GetValue(keyName, "filename", "def");
-            if (s2 != "def" && File.Exists(s2))
+    /*        if (s2 != "def" && File.Exists(s2))
                 MW.glAktFileName = s2;
             else
                 MW.glAktFileName = @"C:\C#\C# messen  ALT\C# messen\k1000.jpg";
-
+    */
             //glAktFileName2 = @"C:\C#\C# messen  ALT\C# messen\test500.jpg";
         }
 
@@ -47,11 +43,7 @@ namespace Messen23
         {
             Registry.SetValue(keyName, "TestAnsicht1", glTestAnsicht1);
             Registry.SetValue(keyName, "TestAnsicht2", glTestAnsicht2);
-
-            Registry.SetValue(keyName, "TestAnsichtChKreuz", glTTKreuz);
-            Registry.SetValue(keyName, "TestAnsichtChLine", glTTLinien);
-            Registry.SetValue(keyName, "TestAnsichtsingle", glAnsichtSingle);
-
+             
             if (TestAn != null)
                 TestAn.Close();
         }
@@ -64,30 +56,15 @@ namespace Messen23
             bool? Res = TestAn.ShowDialog();
             if (Res == false)
                 return;
-            if (TestAn.single.IsChecked == true)
-                glTTLinien = 0;
-            else
-                glAnsichtSingle = 1;
-            if (TestAn.CH12.IsChecked == true)
-                glTTLinien = 0;
-            else
-                glTTLinien = 1;
-            if (TestAn.CH13.IsChecked == true)
-                glTTKreuz = 0;
-            else
-                glTTKreuz = 1;
-
-            if (TestAn.single.IsChecked == true)
-                glAnsichtSingle = 0;
-            else
-                glAnsichtSingle = 1;
+ 
             if (TestAn.RB11.IsChecked == true)
                 glTestAnsicht1 = 1;
             else if (TestAn.RB12.IsChecked == true)
                 glTestAnsicht1 = 2;
-            else
+            else if (TestAn.RB13.IsChecked == true)
                 glTestAnsicht1 = 3;
-
+            else
+                glTestAnsicht1 = 4;
             if (TestAn.RB21.IsChecked == true)
                 glTestAnsicht2 = 1;
             else if (TestAn.RB22.IsChecked == true)
@@ -97,12 +74,20 @@ namespace Messen23
             else
                 glTestAnsicht2 = 4;
         }
-
-        internal void TestAusgaben(Himg himg)
+        internal void ZeichneSchnittpunkte(Himg himg)
+        {
+            foreach (List<S1Kl> Li in himg.S1xy)
+            {
+                for (int ii = 0; ii < Li.Count; ii++)
+                {
+                    Point hp = new Point((int) Li[ii].S1P.X, (int) Li[ii].S1P.Y);
+                    tools.HSetPixel(himg.Img1, hp, Color.Red, PunktKreuzGroesse);
+                }
+            }
+        }            internal void TestAusgaben(Himg himg)
         {
             //Kreuzerln
-            if ((glAnsichtSingle == 0 && glTestAnsicht1 == 3) ||
-                (glAnsichtSingle == 1 && glTTKreuz == 1))
+            if (glTestAnsicht1 == 3|| glTestAnsicht1 == 4)
             {
                 if (glTestAnsicht2 == 2 || glTestAnsicht2 == 4)
                 {//Kreuzerln horiz
@@ -115,23 +100,16 @@ namespace Messen23
                     ZeichneKreuze(himg.VertLines.Dark, Color.DarkBlue, himg);
                     HZeichneLinie(himg, himg.VertLines.Startline + 1, 0, himg.VertLines.Startline + 1, himg.Img1.Height, Color.Red);  //!!TEST                    
                 }
-            }
+            }            
             //Linien
-            if ((glAnsichtSingle == 0 && glTestAnsicht1 == 2) ||
-                (glAnsichtSingle == 1 && glTTLinien == 1))
+            if (glTestAnsicht2 == 2 || glTestAnsicht2 == 4)
             {
-                if (glTestAnsicht2 == 2 || glTestAnsicht2 == 4)
-                {//Linien horiz
+                if (glTestAnsicht2 == 2 || glTestAnsicht2 == 4)   //Linien horiz
                     ZeichneLines(himg.HorLines.Dark, Color.Red, himg);
-
-                }
-                if (glTestAnsicht2 == 3 || glTestAnsicht2 == 4)
-                {//Linien vert   
-                    ZeichneLines(himg.VertLines.Dark, Color.DarkBlue, himg);
-                }
+                if (glTestAnsicht2 == 3 || glTestAnsicht2 == 4)   //Linien vert   
+                    ZeichneLines(himg.VertLines.Dark, Color.DarkBlue, himg);                
             }
         }
-
         private void ZeichneLines(List<Lines.sDarkX> darkH, Color col, Himg himg)
         {
             //ZeichneLinie(himg, darkH[0].VertDown[2 - 1], darkH[0].VertDown[2], col);
@@ -158,34 +136,9 @@ namespace Messen23
             {
 
                 for (int jj = 0; jj < darkH[ii].VertDown.Count; jj++)
-                    HSetPixel(himg, darkH[ii].VertDown[jj], col);
+                    tools.HSetPixel(himg.Img1, darkH[ii].VertDown[jj], col, PunktKreuzGroesse);
                 for (int jj = 0; jj < darkH[ii].VertUp.Count; jj++)
-                    HSetPixel(himg, darkH[ii].VertUp[jj], col);
-            }
-
-        }
-        private void HSetPixel(Himg himg, Point PP, Color color)
-        {
-            himg.Img1.SetPixel(PP.X, PP.Y, color);
-
-            for (int ii = 1; ii <= PunktKreuzGroesse; ii++)
-            {
-                if ((PP.X + ii < himg.Img1.Width) && (PP.Y + ii < himg.Img1.Height))
-                {
-                    himg.Img1.SetPixel(PP.X + ii, PP.Y + ii, color);
-                }
-                if ((PP.X - ii >= 0) && (PP.Y - ii >= 0))
-                {
-                    himg.Img1.SetPixel(PP.X - ii, PP.Y - ii, color);
-                }
-                if ((PP.X + ii < himg.Img1.Width) && (PP.Y - ii >= 0))
-                {
-                    himg.Img1.SetPixel(PP.X + ii, PP.Y - ii, color);
-                }
-                if ((PP.X - ii >= 0) && (PP.Y + ii < himg.Img1.Height))
-                {
-                    himg.Img1.SetPixel(PP.X - ii, PP.Y + ii, color);
-                }
+                    tools.HSetPixel(himg.Img1, darkH[ii].VertUp[jj], col, PunktKreuzGroesse);
             }
         }
         ///XXXXXXXXXxXXXXXXXXXxXXXXXXXXXxXXXXXXXXXxXXXXXXXXXx

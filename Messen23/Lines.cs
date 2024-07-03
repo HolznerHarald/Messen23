@@ -17,7 +17,7 @@ namespace Messen23
         private Bitmap Img1;
         private MainWindow MW;
         private double mittlereLinienAbstand;
-        private double mittlereLinienbreiteX = 1;
+        internal double mittlereLinienbreiteX = 1;
 
 
         // GD Globale Declarations
@@ -68,6 +68,7 @@ namespace Messen23
             public int Linienbreite;
             public List<Point> VertDown;
             public List<Point> VertUp;
+            public List<Point> AllePs;
             public List<Point> Glatt;
             public sDarkX(Point Start, int LinBr)
             {
@@ -76,6 +77,7 @@ namespace Messen23
                 Linienbreite = LinBr;
                 VertDown = new List<Point>();
                 VertUp = new List<Point>();
+                AllePs=new List<Point>();   
                 Glatt = new List<Point>();
             }
         }
@@ -101,7 +103,7 @@ namespace Messen23
             //zu allen Punkten DarkX entlang der Startlinie wird eine vertikale Linie gesucht
             for (int ii = 0; ii < Dark.Count; ii++)
                 GoAlongLine(ii, Dark);
-            Glätten2(Dark);           
+         //   Glätten2(Dark);           
         }
         public void DarkYKoordFlip()
         {
@@ -161,11 +163,11 @@ namespace Messen23
                 hd = hd / SummeWichtung;
                 GlattListe.Add(hd);
             }
-            for (int ii = 0; ii < GlaettungsBereich2; ii++)
+  /*          for (int ii = 0; ii < GlaettungsBereich2; ii++)
             {
                 hDark.Glatt.RemoveAt(0);
                 hDark.Glatt.RemoveAt(hDark.Glatt.Count - 1);
-            }
+            }*/
             for (int ii = 0; ii < GlattListe.Count; ii++)
                 hDark.Glatt[ii] = new Point((int)Math.Round(GlattListe[ii]), hDark.Glatt[ii].Y);
         }

@@ -7,16 +7,33 @@
         Closing="Window_Closing"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="900">
-
+    <Window.Resources>
+        <ContextMenu x:Key="cmButton" x:Name="cm1">
+            <MenuItem Header="Menu item 1" Click="ContLösch_Click"/>
+            <MenuItem Header="Menu item 2" Click="NaheLösch_Click" />
+            <MenuItem Header="Menu item 3" Click="Gelöschtdazu_Click"/>
+        </ContextMenu>
+    </Window.Resources>
     <DockPanel Name="Doc">
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_File">
-                <MenuItem Header="_New" />
-                <MenuItem Header="_Open" Click="MenuItemOpen_Click"/>
-                <MenuItem Header="_Save" />
+            <MenuItem Header="_File">               
+                <MenuItem Header="_Kalibrierungs-Foto laden" Click="KalOpenFoto_Click"/>
+                <MenuItem Name="KalE" Header="_Kalibrerung erstellen" Click="Bearbeiten_Click"/>
+                <MenuItem Name="KalS" Header="_Kalibrerung speichern" Click="KalS_Click" />
+                <MenuItem Name="KalO" Header="_Kalibrerung öffnen" Click="KalO_Click" />
+                <MenuItem Name="KalZ" Header="_Kalibrerung zeigen" Click="KalZ_Click" />
                 <Separator />
                 <MenuItem Header="_Exit" />
             </MenuItem>
+            <MenuItem Header="_Markieren">
+                <MenuItem Header="_Objekt-Foto laden" Click="ObjektOpen_Click"/>
+                <MenuItem Name="MarkBeginn" Header="_Markierung beginnen" Click="ObjektMBeginn_Click"/>
+                <MenuItem Name="MarkSave" Header="_Markierung beenden" Click="ObjektMSave_Click"/>               
+            </MenuItem>
+            <MenuItem Header="_Messen">
+                <MenuItem Header="_Auswerten" Click="Auswerten_Click"/>
+            </MenuItem>
+            
             <MenuItem Header="_Bearbeiten">
                 <MenuItem Header="_Find Lines" Click="Bearbeiten_Click"/>
                 <MenuItem Header="_Zuschneiden und Speichern unter selben Namen" Click="Zuschneiden_Click"/>
@@ -40,18 +57,19 @@
                 <MenuItem Header="_Convert BitMap->BitmapImage" Click="MenuItemT22_Click"/>
                 <MenuItem Header="_T3" Click="MenuItemT23_Click" />
                 <MenuItem Header="_T4" Click="MenuItemT24_Click"/>
-                <MenuItem Header="_T5" Click="MenuItemT25_Click"/>
+                <MenuItem Header="_Graph" Click="MenuItemT25_Click"/>
                 <MenuItem Header="_Bitmap Drehen" Click="MenuItemT26_Click" />
             </MenuItem>
         </Menu>
-        <Grid Name="GG"  Background="Transparent" PreviewMouseDown="GG_PreviewMouseDown">
+        <!--<Grid Name="GG"  Background="Transparent" PreviewMouseDown="GG_PreviewMouseDown">-->
+        <Grid Name="GG"  Background="Transparent">            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
             <Image  Name = "imgName" Visibility="Hidden" Margin = "0"/>
             <ScrollViewer  Grid.Column = "0"  x:Name = "Scroll1">
-                <Image  x:Name = "imgName1" MouseDown="imgName1_MouseDown" MouseMove="imgName1_MouseMove"  Margin = "0" />
+                <Image  x:Name = "imgName1" MouseLeftButtonDown="imgName1_MouseDownLeft" MouseMove="ImgName1_MouseMove"  MouseRightButtonDown="imgName1_MouseDownRight" Margin = "0" />
             </ScrollViewer>
             <ScrollViewer Grid.Column="1" 
                   HorizontalScrollBarVisibility="Auto" 
